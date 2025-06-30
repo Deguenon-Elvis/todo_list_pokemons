@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex API</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Pokédex API</h1>
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link active" data-page="list">Liste</a></li>
+                <li><a href="#" class="nav-link" data-page="search">Recherche</a></li>
+                <li><a href="#" class="nav-link" data-page="details">Détails</a></li>
+                <li><a href="#" class="nav-link" data-page="manage">Gestion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Page Liste -->
+        <section id="list-page" class="page active">
+            <h2>Liste des Pokémons</h2>
+            <div class="pokemon-list">
+                <table id="pokemon-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Types</th>
+                            <th>Total</th>
+                            <th>HP</th>
+                            <th>Attaque</th>
+                            <th>Défense</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pokemon-list-body">
+                        <!-- Rempli dynamiquement -->
+                    </tbody>
+                </table>
+                <p id="total-count"></p>
+            </div>
+        </section>
+
+        <!-- Page Recherche -->
+        <section id="search-page" class="page">
+            <h2>Recherche de Pokémons</h2>
+            <div class="search-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="types">Types:</label>
+                        <select id="types" multiple>
+                            <!-- Rempli dynamiquement -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Évolution:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="evo" value="all" checked> Tous</label>
+                            <label><input type="radio" name="evo" value="true"> Avec évolution</label>
+                            <label><input type="radio" name="evo" value="false"> Sans évolution</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="min-total">Total minimum:</label>
+                        <input type="number" id="min-total" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="max-total">Total maximum:</label>
+                        <input type="number" id="max-total" min="0" value="1000">
+                    </div>
+                    <div class="form-group">
+                        <label for="sort-by">Trier par:</label>
+                        <select id="sort-by">
+                            <option value="id">ID</option>
+                            <option value="name">Nom</option>
+                            <option value="total">Total</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ordre:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="order" value="asc" checked> Ascendant</label>
+                            <label><input type="radio" name="order" value="desc"> Descendant</label>
+                        </div>
+                    </div>
+                </div>
+                <button id="search-btn">Rechercher</button>
+            </div>
+            <div id="search-results">
+                <!-- Résultats de recherche -->
+            </div>
+        </section>
+
+        <!-- Page Détails -->
+        <section id="details-page" class="page">
+            <h2>Détails d'un Pokémon</h2>
+            <div class="details-form">
+                <div class="form-group">
+                    <label for="pokemon-id">ID du Pokémon:</label>
+                    <input type="number" id="pokemon-id" min="1" value="1">
+                    <button id="show-details-btn">Afficher</button>
+                </div>
+            </div>
+            <div id="pokemon-details" class="hidden">
+                <!-- Détails du Pokémon -->
+            </div>
+        </section>
+
+        <!-- Page Gestion -->
+        <section id="manage-page" class="page">
+            <h2>Gestion des Pokémons</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="add">Ajouter</button>
+                <button class="tab-btn" data-tab="edit">Modifier</button>
+                <button class="tab-btn" data-tab="delete">Supprimer</button>
+            </div>
+            
+            <!-- Formulaire d'ajout -->
+            <div id="add-tab" class="tab-content active">
+                <h3>Ajouter un Pokémon</h3>
+                <form id="add-form">
+                    <!-- Champs du formulaire -->
+                </form>
+            </div>
+            
+            <!-- Formulaire de modification -->
+            <div id="edit-tab" class="tab-content">
+                <h3>Modifier un Pokémon</h3>
+                <div class="form-group">
+                    <label for="edit-pokemon-id">ID du Pokémon:</label>
+                    <input type="number" id="edit-pokemon-id" min="1" value="1">
+                    <button id="load-pokemon-btn">Charger</button>
+                </div>
+                <form id="edit-form" class="hidden">
+                    <!-- Champs du formulaire -->
+                </form>
+            </div>
+            
+            <!-- Formulaire de suppression -->
+            <div id="delete-tab" class="tab-content">
+                <h3>Supprimer un Pokémon</h3>
+                <div class="form-group">
+                    <label for="delete-pokemon-id">ID du Pokémon:</label>
+                    <input type="number" id="delete-pokemon-id" min="1" value="1">
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="confirm-delete"> Je confirme la suppression
+                        </label>
+                    </div>
+                    <button id="delete-pokemon-btn">Supprimer</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="notification" class="hidden"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
